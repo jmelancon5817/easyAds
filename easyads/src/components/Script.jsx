@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { FaceSmileIcon } from "@heroicons/react/24/outline";
 
 function Script() {
   const [inputText, setInputText] = useState("");
-  const [generatedScript, setGeneratedScript] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const API_ENDPOINT = "http://localhost:8080/generateScript";
@@ -27,19 +29,46 @@ function Script() {
         }),
       });
       const data = await response.json();
-      setGeneratedScript(data.generatedScript);
+
+      console.log(chatHistory);
+      setChatHistory([
+        ...chatHistory,
+        { role: "user", content: inputText },
+        { role: "system", content: data.script.content },
+      ]);
     } catch (error) {
       console.error("Error:", error);
     }
+    setInputText("");
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    setGeneratedScript("");
-  }, [inputText]);
-
   return (
     <div className="script">
+      <div className="script-header">
+        <h2>Generate Script</h2>
+        <p>
+          Use this tool to generate chatbot scripts based on your input. Type a
+          prompt in the input box and click "Send" to generate a response from
+          the chatbot. The conversation history will be displayed below, with
+          icons representing user input and chatbot responses. You can copy the
+          generated script to your clipboard by clicking the "Copy Script"
+          button.
+        </p>
+      </div>
+      <div className="chat-history">
+        {chatHistory.map((message, index) => (
+          <div className={`message ${message.role}`} key={index}>
+            {message.role === "user" ? (
+              <UserCircleIcon className="message-icon" />
+            ) : (
+              <FaceSmileIcon className="message-icon" />
+            )}
+
+            <span>{message.content}</span>
+          </div>
+        ))}
+      </div>
       <div className="input-container">
         <textarea
           className="input-textarea"
@@ -52,17 +81,9 @@ function Script() {
           onClick={handleGenerateScript}
           disabled={!inputText || isLoading}
         >
-          {isLoading ? "Generating..." : "Generate Script"}
+          {isLoading ? "Generating..." : "Send"}
           <ChatBubbleLeftEllipsisIcon className="generate-icon" />
         </button>
-      </div>
-      <div className="output-container">
-        {generatedScript && (
-          <div className="generated-script">
-            <h3>Generated Script:</h3>
-            <pre>{generatedScript}</pre>
-          </div>
-        )}
       </div>
     </div>
   );
