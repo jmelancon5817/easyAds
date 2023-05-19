@@ -7,13 +7,14 @@ Advertisemt tool for content creators.  Allows users to generate ad scripts and 
 
 EasyAds consists of three sections: home, script, and voice.
 
+---
+
 #### Home:
 
 The home section explains the scope of the app.
 
 ![home](public/images/home.png)
 
----
 
 #### Script:
 
