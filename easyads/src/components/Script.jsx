@@ -1,12 +1,15 @@
 import React, { useState } from "react";
+import "../styles/script.css";
 import { ChatBubbleLeftEllipsisIcon } from "@heroicons/react/24/outline";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
 import { FaceSmileIcon } from "@heroicons/react/24/outline";
+import { ArrowDownOnSquareIcon } from "@heroicons/react/24/outline";
 
 function Script() {
   const [inputText, setInputText] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [copySuccess, setCopySuccess] = useState(false);
 
   const API_ENDPOINT = "http://localhost:8080/generateScript";
 
@@ -43,17 +46,28 @@ function Script() {
     setIsLoading(false);
   };
 
+  const handleCopy = () => {
+    const mostRecentResponse = chatHistory[chatHistory.length - 1];
+    navigator.clipboard
+      .writeText(mostRecentResponse.content)
+      .then(() => {
+        setCopySuccess(true);
+      })
+      .catch((error) => {
+        console.error("Failed to copy response: ", error);
+      });
+    setCopySuccess(true);
+  };
+
   return (
-    <div className="script">
+    <div className="script" id="script-section">
       <div className="script-header">
         <h2>Generate Script</h2>
         <p>
           Use this tool to generate chatbot scripts based on your input. Type a
           prompt in the input box and click "Send" to generate a response from
-          the chatbot. The conversation history will be displayed below, with
-          icons representing user input and chatbot responses. You can copy the
-          generated script to your clipboard by clicking the "Copy Script"
-          button.
+          the chatbot. You can copy the generated script to your clipboard by
+          clicking the "Copy Script" button.
         </p>
       </div>
       <div className="chat-history">
@@ -76,14 +90,21 @@ function Script() {
           value={inputText}
           onChange={handleInputChange}
         />
-        <button
-          className="generate-button"
-          onClick={handleGenerateScript}
-          disabled={!inputText || isLoading}
-        >
-          {isLoading ? "Generating..." : "Send"}
-          <ChatBubbleLeftEllipsisIcon className="generate-icon" />
-        </button>
+        <div className="chat-btns">
+          <button
+            className="generate-button"
+            onClick={handleGenerateScript}
+            disabled={!inputText || isLoading}
+          >
+            {isLoading ? "Generating..." : "Send"}
+            <ChatBubbleLeftEllipsisIcon className="generate-icon" />
+          </button>
+          <button className="save-button" onClick={handleCopy}>
+            {" "}
+            {copySuccess ? "Copied!" : "Copy"}{" "}
+            <ArrowDownOnSquareIcon className="save-icon" />
+          </button>
+        </div>
       </div>
     </div>
   );

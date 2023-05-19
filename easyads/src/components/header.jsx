@@ -1,6 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import "../styles/header.css";
 
 function Header() {
+  const scrollToSection = (event, sectionId) => {
+    event.preventDefault();
+    const section = document.getElementById(sectionId);
+    window.scrollTo({
+      top: section.offsetTop,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <header className="header">
       <div>
@@ -9,19 +19,31 @@ function Header() {
       <nav className="navbar">
         <ul className="navbar-nav">
           <li className="nav-item">
-            <a href="#" className="nav-link">
+            <a
+              href="#home-section"
+              className="nav-link"
+              onClick={(event) => scrollToSection(event, "home-section")}
+            >
+              Home
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              href="#script-section"
+              className="nav-link"
+              onClick={(event) => scrollToSection(event, "script-section")}
+            >
               Script
             </a>
           </li>
 
           <li className="nav-item">
-            <a href="#" className="nav-link">
+            <a
+              href="#voice-section"
+              className="nav-link"
+              onClick={(event) => scrollToSection(event, "voice-section")}
+            >
               Voice
-            </a>
-          </li>
-          <li className="nav-item">
-            <a href="#" className="nav-link">
-              Demo
             </a>
           </li>
         </ul>
