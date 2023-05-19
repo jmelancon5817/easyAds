@@ -18,7 +18,34 @@ function Voice() {
     utterance.volume = volume;
     utterance.pitch = pitch;
     utterance.voice = voice;
-    console.log(utterance);
+
+    const mediaStream = new MediaStream();
+    const mediaStreamTrack = audioContext.createMediaStreamTrack();
+    mediaStream.addTrack(mediaStreamTrack);
+
+    const mediaRecorder = new MediaRecorder(mediaStream);
+    let chunks = [];
+
+    mediaRecorder.addEventListener("dataavailable", (event) => {
+      chunks.push(event.data);
+    });
+
+    mediaRecorder.addEventListener("stop", () => {
+      const audioBlob = new Blob(chunks, { type: "audio/mp3" });
+      setAudioBlob(audioBlob);
+
+      // Clear the chunks array for future recordings
+      chunks = [];
+    });
+
+    utterance.addEventListener("start", () => {
+      mediaRecorder.start();
+    });
+
+    utterance.addEventListener("end", () => {
+      mediaRecorder.stop();
+    });
+
     speechSynthesis.speak(utterance);
   };
 
