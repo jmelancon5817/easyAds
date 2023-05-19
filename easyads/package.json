@@ -1,0 +1,30 @@
+{
+  "name": "easyads",
+  "version": "1.0.0",
+  "description": "frontend",
+  "main": "index.js",
+  "dependencies": {
+    "@heroicons/react": "^2.0.17",
+    "react-h5-audio-player": "^3.8.6",
+    "react-router-dom": "^6.11.1",
+    "react-scripts": "^5.0.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "react-scripts start"
+  },
+  "author": "",
+  "license": "ISC",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
