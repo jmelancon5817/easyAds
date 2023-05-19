@@ -26,7 +26,7 @@ The script section allows users to interact with an ai chatbot to create ad read
 
 The voice section allows users to choose from a list of available stock voices.  Users can further edit the voice via pitch and volume controls.  Users can download the audio file of the ad read.
 
-![voice](easyads/public/optimize.png)
+![voice](easyads/public/voice.png)
 
 
 
