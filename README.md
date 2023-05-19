@@ -13,20 +13,20 @@ EasyAds consists of three sections: home, script, and voice.
 
 The home section explains the scope of the app.
 
-![home](public/images/home.png)
+![home](public/home.png)
 
 
 #### Script:
 
 The script section allows users to interact with an ai chatbot to create ad read scripts.
 
-![script](public/images/script.png)
+![script](public/script.png)
 
 #### Voice:
 
 The voice section allows users to choose from a list of available stock voices.  Users can further edit the voice via pitch and volume controls.  Users can download the audio file of the ad read.
 
-![voice](public/images/optimize.png)
+![voice](public/optimize.png)
 
 
 
